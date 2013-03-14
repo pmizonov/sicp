@@ -1,13 +1,11 @@
 (define (square x) (* x x))
-
-(define (square-plus-max x y z)
-  (if (= y (if (> y z) y z))
-      (+ (square x) (square y))
-      (+ (square x) (square z))))
+(define (sum-two-square x y) (+ (square x) (square y)))
 
 (define (two-max-squares x y z)
-  (square-plus-max (if (> x y) x y) (if (< x y) x y) z))
-
+  (cond ((and (<= x y) (<= x z)) (sum-two-square y z))
+        ((and (<= y x) (<= y z)) (sum-two-square x z))
+        (else (sum-two-square x y))))
+  
 ;;tests
 
 (two-max-squares 3 5 4)
