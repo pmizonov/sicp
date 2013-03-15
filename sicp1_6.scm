@@ -15,7 +15,6 @@
 ;          guess
 ;          (sqrt-iter (improve guess x) x)))
 
-
 (define (improve guess x)
   (average guess (/ x guess)))
 
