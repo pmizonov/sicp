@@ -9,7 +9,7 @@
 
 (define (improve guess x)
   (if (= guess 0)
-      x
+      guess
       (average guess (/ x guess))))
 
 (define (average x y)
@@ -19,10 +19,10 @@
   (< (current-guess new-guess guess) 1.0e-4))
 
 (define (current-guess new old)
-  (if (= new old) 
-      0
+  (if (= 0 old) 
+      (abs new)
       (abs (/ (- new old) 
-              (if (> (abs new) (abs old)) new old)))))
+              old))))
  
 (define (sqrt-m x)
   (if (< x 0)
