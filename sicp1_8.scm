@@ -9,8 +9,8 @@
                  x)))
 
 (define (improve guess x)
-  (if (= guess 0)
-      guess
+  (if (= (square guess) 0)
+      x
       (/ (+ (* 2 guess) (/ x (square guess))) 
          3)))
 
@@ -46,4 +46,9 @@
 
 (define square-num 0)
 (crt-m square-num)
-(cube (crt-m square-num))
+
+(define square-num 0.0)
+(crt-m square-num)
+
+(define square-num -0.0)
+(crt-m square-num)
