@@ -9,8 +9,8 @@
                  x)))
 
 (define (improve guess x)
-  (if (= (square guess) 0)
-      x
+  (if (= (cube guess) 0)
+      0.0
       (/ (+ (* 2 guess) (/ x (square guess))) 
          3)))
 
