@@ -8,10 +8,10 @@
 (define (f-iterative n)  
   (if (< n 3)
       n
-      (f-iter 0 -1 -2 0 n)))
+      (f-iter 2 1 0 3 n)))
 
 (define (f-iter n1 n2 n3 count n)
-  (if (= (+ count 1) n)
+  (if (= count n)
       (f n1 n2 n3)
       (f-iter (f n1 n2 n3) n1 n2 (+ count 1) n)
       ))
