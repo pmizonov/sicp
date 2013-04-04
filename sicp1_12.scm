@@ -12,19 +12,19 @@
   (cond ((< row 1) 1)
         ((< element 1) 1)
         ((= element row) 1)
-        (else (+ (pascal-rec (- row 1) (- element 1)) (pascal-rec (- row 1) element)))))
+        (else (+ (pascal-rec (- row 1) (- element 1))
+                 (pascal-rec (- row 1) element)))))
 
 ;****
 (define (pascal-triangle n)
-  (pascal-line n 0))
+  (pascal-line n 0 0))
 
-(define (pascal-line row element)
-  (cond ((= row 0) (display "1\n"))
-        ((= row 1) (display "1 1\n") (pascal-line 0 0))
-        ((= row element) (display "1\n") (pascal-line (- row 1) 0))
-        (else (display (pascal-rec row element))
+(define (pascal-line row current-row element)
+  (cond ((= current-row 0) (display "1\n") (pascal-line row 1 0))
+        ((= current-row element) (display "1\n") (pascal-line row (+ current-row 1) 0))
+        ((>= row current-row) (display (pascal-rec current-row element))
               (display " ")
-              (pascal-line row (+ element 1)))))
+              (pascal-line row current-row (+ element 1)))))
 ; tests
 
 (= (pascal-rec 0 0) 1)
@@ -35,3 +35,7 @@
 (= (pascal-rec 10 5) 252)
 
 (pascal-triangle 10)
+(pascal-triangle 3)
+(pascal-triangle 2)
+(pascal-triangle 1)
+(pascal-triangle 0)
