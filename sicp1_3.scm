@@ -1,10 +1,9 @@
+#lang scheme
 (define (square x) (* x x))
-(define (sum-two-square x y) (+ (square x) (square y)))
 
 (define (two-max-squares x y z)
-  (cond ((and (<= x y) (<= x z)) (sum-two-square y z))
-        ((and (<= y x) (<= y z)) (sum-two-square x z))
-        (else (sum-two-square x y))))
+  (if (and (<= z y) (<= z x)) (+ (square x) (square y))
+        (two-max-squares z x y)))
   
 ;;tests
 
