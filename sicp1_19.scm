@@ -17,17 +17,22 @@
 ;
 ;   a1 ← bq + aq + ap
 ;   b1 ← bp + aq
-;   a2 ← b1q + a1q + a1p = (bp + aq)*q + (bq + aq + ap)*q + (bq + aq + ap)*p = bpq + aq^2 + bq^2 + aq^2 + apq + bpq + aq^2 + apq =
-;   = 3aq^2 + 2apq + 2bpq + bq^2 = (3a + b)q^2 + pq(2a+2b)
-;   b2 ← b1p + a1q = (bp + aq)p + (bq + aq + ap)q = bp^2 + apq + bq^2 + aq^2 + apq = aq^2 + bq^2 + bp^2 + 2apq =
-;   = (a+b)q^2 + bp^2 + 2apq
-;   a1 = a + b
-;   b1 = a
-;   a2 = a + b + a = 2a + b
-;   b2 = a + b
-;   2a + b = (3a + b)q^2 + pq(2a+2b)
-;   p = 2a + b
-;   a + b = (a+b)q^2 + bp^2 + 2apq
+;   a2 ← b1q + a1q + a1p = (bp + aq)*q + (bq + aq + ap)*q + (bq + aq + ap)*p = bpq + aq^2 + bq^2 + aq^2 + apq + bpq + apq + ap^2 =
+;   = 2aq^2 + 2bpq + 2apq + bq^2 + ap^2
+;   b2 ← b1p + a1q = (bp + aq)p + (bq + aq + ap)q = bp^2 + apq + bq^2 + aq^2 + apq = aq^2 + bq^2 + bp^2 + 2apq
+;
+;   a2 = bq' + aq' + ap'
+;   b2 = bp' + aq'
+;   
+;   bq' + aq' + ap' = 2aq^2 + 2bpq + 2apq + bq^2 + ap^2 = b(q^2 + 2pq) + a(2q^2 + 2pq + p^2) = b(q^2 + 2pq) + a(q^2 + 2pq) + a(p^2 + q^2)
+;   bp' + aq' = aq^2 + bq^2 + bp^2 + 2apq = b(p^2 + q^2) + a(q^2 + 2pq)
+;   
+;   q' = q^2 + 2pq
+;   p' = p^2 + q^2
+;   
+
+(define (square x)
+  (* x x))
 
 (define (fib-x n)
   (fib-iter 1 0 0 1 n))
@@ -37,8 +42,8 @@
         ((even? count)
          (fib-iter a
                    b
-                   p;??; вычислить p’
-                   q;??; вычислить q’
+                   (+ (square p) (square q)) ; вычислить p’
+                   (+ (square q) (* 2 p q))  ; вычислить q’
                    (/ count 2)))
         (else (fib-iter (+ (* b q) (* a q) (* a p))
                         (+ (* b p) (* a q))
@@ -46,5 +51,5 @@
                         q
                         (- count 1)))))
 
-(time (fib 7))
-(time (fib-x 7))
+(time (fib-x 189127))
+(time (fib 189127))
