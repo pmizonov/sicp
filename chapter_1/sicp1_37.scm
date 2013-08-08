@@ -7,14 +7,16 @@
 (newline)
 
 (define (cont-frac n d k)
-  (if (< k 1) 0
-      (/ (n k) (+ (d k) (cont-frac n d (- k 1))))))
+  (define (step i)
+    (if (< i k) (/ (n i) (+ (d i) (step (+ i 1))))
+        (/ (n i) (d i))))
+  (step 1))
 
 (define (cont-frac-i n d k)
-  (define (cont-frac-iter n d k i)
-    (if (> i k) 0
-        (/ (n i) (+ (d i) (cont-frac-iter n d k (+ i 1))))))
-  (cont-frac-iter n d k 1))
+  (define (iter i result)
+    (if (< i 1) result
+        (iter (- i 1) (/ (n i) (+ (d i) result)))))
+  (iter k 0))
 
 (/ 1 (cont-frac (lambda (i) 1.0)
                 (lambda (i) 1.0)
