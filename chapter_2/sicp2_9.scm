@@ -33,53 +33,31 @@
 
 (define a (make-interval 1 2))
 (define b (make-interval 10 20))
-
-(define add-res (add-interval a b))
-(define mul-res (mul-interval a b))
-(define div-res (div-interval a b))
-(define sub-res (sub-interval a b))
+(define c (make-interval 20 30))
 
 (width a)
 (width b)
-(width add-res)
-(width sub-res)
-(width mul-res)
-(width div-res)
+(width c)
 
-; (sub-interval x y)
-; (make-interval (- (lower-bound x) (upper-bound y)) (- (upper-bound x) (lower-bound y))))
-; (cons (- (car x) (cdr y)) (- (cdr x) (car y))))
+; width([a,b]) + width([c,d]) = (a-b)/2 + (c-d)/2
+; width([a,b]+[c,d])=width([a+c, b+d])=((a+c)-(b+d))/2 = (a-b)/2 + (c-d)/2 = width([a,b]) + width([c,d])
+; Радиус суммы интервалов равен сумме радиусов каждого из интервала. И является функцией от радиусов аргументов,
+; т.е. зависит только от радиусов слагаемых.
 
-; (add-interval x y)
-; (make-interval (+ (lower-bound x) (lower-bound y)) (+ (upper-bound x) (upper-bound y)))
-; (cons (+ (car x) (car y)) (+ (cdr x) (cdr y)))
+(width (add-interval a b))
+(width (add-interval a c))
 
-; (sub-interval x y)
-; (make-interval (- (lower-bound x) (upper-bound y)) (- (upper-bound x) (lower-bound y))))
-; (cons (- (car x) (cdr y)) (- (cdr x) (car y))))
+; width([a,b]-[c,d])=width([a-d, b-c])=((a-d)-(b-c))/2 = (a-d-b+c)/2 = ((a-b)+(c-d))/2 = width([a,b]) + width([c,d])
+; Радиус разности интервалов равен сумме радиусов каждого из интервала. И тоже является функцией от радиусов аргументов.
 
-; (width (add-interval x y))
-; (/ (- (upper-bound (add-interval x y)) (lower-bound (add-interval x y))) 2.0)
-; (/ (- (cdr (add-interval x y)) (car (add-interval x y))) 2.0)
-; (/ (- (cdr (cons (+ (car x) (car y)) (+ (cdr x) (cdr y)))) (car (cons (+ (car x) (car y)) (+ (cdr x) (cdr y))))) 2.0)
-; (/ (- (+ (cdr x) (cdr y)) (+ (car x) (car y))) 2.0)
-; (/ (+ (- (cdr x) (car x)) (- (cdr y) (car y))) 2.0)
-; (+ (/ (- (cdr x) (car x)) 2) (/ (- (cdr y) (car y)) 2))
-; (+ (width x) (width y))
+(width (sub-interval a b))
+(width (sub-interval a c))
 
-; (width (sub-interval x y))
-; (/ (- (upper-bound (sub-interval x y)) (lower-bound (sub-interval x y))) 2.0)
-; (/ (- (cdr (sub-interval x y)) (car (sub-interval x y))) 2.0)
-; (/ (- (cdr (cons (- (car x) (cdr y)) (- (cdr x) (car y))))) (car (cons (- (car x) (cdr y)) (- (cdr x) (car y)))))) 2.0)
-; (/ (- (- (cdr x) (car y)) (- (car x) (cdr y))) 2.0)
-; (/ (+ (- (cdr x) (car y)) (- (cdr y) (car x))) 2.0)
-; (/ (+ (- (cdr x) (car x)) (- (cdr y) (car y))) 2.0)
-; (+ (width x) (width y))
+; Если мы посчитаем радиус произведения или деления от интервалов с одинаковыми радиусами, то получим разные результаты,
+; что говорит о том, что произведение или деление являются функциями, радиус которых зависит не только от радиусов аргументов.sdad
 
-; (width (mul-interval x y))
+(width (mul-interval a b))
+(width (mul-interval a c))
 
-; (width interval)
-; (/ (- (upper-bound interval) (lower-bound interval)) 2.0))
-; (/ (- (cdr interval) (car interval)) 2.0))
-
-; Радиусы add-interval и sub-interval равны и представляют сосбой сумму каждого из интервалов.
+(width (div-interval a b))
+(width (div-interval a c))
