@@ -17,6 +17,10 @@
 
 (define (end-segment segment) (cdr segment))
 
+(define (midpoint-segment segment)
+  (make-point (/ (+ (x-point (start-segment segment)) (x-point (end-segment segment))) 2)
+              (/ (+ (y-point (start-segment segment)) (y-point (end-segment segment))) 2)))
+
 ; (y1 - y2)x + (x2-x1)y + (x1y2 - x2y1) = 0
 ; Ax + By + C = 0
 
@@ -56,11 +60,16 @@
                  (same-point? (end-segment side-a) (end-segment side-b)))) (display "segments do not have a common point"))
         (else (cons side-a side-b))))
 
-(define (rectangle-by-diagonal diagonal diagonal-angle)  
+(define (rectangle-by-diagonal diagonal diagonal-angle)
+  (define midpoint (midpoint-segment diagonal))
+  (define length (length-segment diagonal))
+  
   1)
 
-; cos phi = abs|a1a2 + b1b2|/sqrt(a1^2 + b1^2)*sqrt(a2^2 + b2^2)
-; midpoint
+; cos phi = abs|a1A + b1B|/sqrt(a1^2 + b1^2)*sqrt(A^2 + B^2)
+; A*midpoint-x + B*midpoint-y + C = 0
+; A*cornerpoint-x + B*cornerpoint-y + C = 0
+; A*cornerpoint-x + B*cornerpoint-y + C = L/2
 
 (define (side-a rectangle)
   (car rectangle))
